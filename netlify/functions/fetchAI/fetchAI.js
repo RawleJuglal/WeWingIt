@@ -1,33 +1,31 @@
 import { Configuration, OpenAIApi } from 'openai'
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
 })
 
 const openai = new OpenAIApi(configuration)
-// Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
-
 
 const handler = async (event) => {
-  try {
-    const response = await openai.createCompletion({
-      model:'davinci:ft-bird-branch-2023-06-02-17-53-21',
-      prompt: event.body,
-      presence_penalty:0.3,
-      frequency_penalty:0,
-      temperature:0,
-      max_tokens: 100,
-      stop:['\n', '->']
-  })
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ 
-        reply: response.data
-      }),
+    try {
+        const response = await openai.createCompletion({
+            model: 'davinci:ft-bird-branch-2023-06-02-17-53-21',
+            prompt: event.body,
+            max_tokens: 500,
+            presence_penalty: 0.3,
+            frequency_penalty: 0,
+            temperature: 0,
+            stop: ['\n', '->']
+        })
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
+                reply: response.data                
+            })
+        }
+    } catch (error) {
+        return { statusCode: 500, body: error.toString() }
     }
-  } catch (error) {
-    return { statusCode: 500, body: error.toString() }
-  }
 }
 
 module.exports = { handler }
