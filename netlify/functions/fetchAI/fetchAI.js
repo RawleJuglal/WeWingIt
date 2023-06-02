@@ -11,7 +11,7 @@ const openai = new OpenAIApi(configuration)
 const handler = async (event) => {
   try {
     const response = await openai.createCompletion({
-      model:'davinci:ft-bird-branch-2023-06-02-19-16-05',
+      model:'davinci:ft-bird-branch-2023-06-02-17-53-21',
       prompt: event.body,
       presence_penalty:0.3,
       frequency_penalty:0,
@@ -24,9 +24,6 @@ const handler = async (event) => {
       body: JSON.stringify({ 
         reply: response.data
       }),
-      // // more keys you can return:
-      // headers: { "headerName": "headerValue", ... },
-      // isBase64Encoded: true,
     }
   } catch (error) {
     return { statusCode: 500, body: error.toString() }
