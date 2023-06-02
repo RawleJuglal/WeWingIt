@@ -1,22 +1,4 @@
-// import { Configuration, OpenAIApi } from 'openai'
-
-import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, push, get, remove } from 'firebase/database'
 import './style.css'
-
-// const configuration = new Configuration({
-//     apiKey: process.env.OPENAI_API_KEY,
-// })
-
-
-const appSettings = {
-    databaseURL: `https://knowitall-openai-85d71-default-rtdb.firebaseio.com/`
-}
-const app = initializeApp(appSettings)
-const database = getDatabase(app)
-const conversationInDB = ref(database)
-
-// const openai = new OpenAIApi(configuration)
 
 const chatbotConversation = document.getElementById('chatbot-conversation')
  
@@ -27,11 +9,7 @@ document.addEventListener('submit', (e) => {
     e.preventDefault()
     const userInput = document.getElementById('user-input')
     conversationStr += `${userInput.value} ->`
-    console.log(conversationStr)   
-    // push(conversationInDB, {
-    //     role: 'user',
-    //     content: userInput.value
-    // })
+
     fetchReply()
     
     const newSpeechBubble = document.createElement('div')
@@ -54,30 +32,9 @@ async function fetchReply(){
     })
     const data = await response.json()
     
-    // const response = await openai.createCompletion({
-    //     model:'davinci:ft-bird-branch-2023-06-02-19-16-05',
-    //     prompt: conversationStr,
-    //     presence_penalty:0,
-    //     frequency_penalty:0.3,
-    //     temperature:0,
-    //     max_tokens: 100,
-    //     stop:['\n', '->']
-    // })
-    conversationStr += ` ${data.reply.choices[0].text} \n`
+    conversationStr += ` ${data.reply.choices[0].text} ->`
     renderTypewriterText(data.reply.choices[0].text)
-    console.log(data)
-    // get(conversationInDB).then(async snapshot => {
-    //     if(snapshot.exists()){
-    //        const conversationArr = Object.values(snapshot.val())
-            
-    //         // renderTypewriterText(response.data.choices[0].message.content)
-    //         // push(conversationInDB, response.data.choices[0].message)
-    //     } else {
-    //         throw {messsage:'No data found'}
-    //     }
-    // })
-    
-    
+    console.log(data)    
 }
 
 function renderTypewriterText(text) {
