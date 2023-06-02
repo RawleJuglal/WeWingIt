@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>We-Wingit Drone Delivery</title>
+  </head>
+  <body>
+    <div id="app">
+      <main>
+        <section class="chatbot-container">
+          <div class="chatbot-header">
+            <img src="/drone-logo.png" class="logo">
+            <h1>We-Wingit Drones</h1>
+            <h2>Delivery Support Chat</h2>
+            <p class="supportId">ID: W889</p>
+          </div>
+          <div class="chatbot-conversation-container" id="chatbot-conversation">
+            <div class="speech speech-ai">
+              How can I help you with your We-Wingit drone delivery? 
+            </div>
+          </div>
+          <form id="form" class="chatbot-input-container">
+            <input name="user-input" type="text" id="user-input" required>
+            <button id="submit-btn" class="submit-btn">
+              <img 
+                src="/send-btn-icon.png" 
+                class="send-btn-icon"
+              >
+            </button>
+          </form>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
