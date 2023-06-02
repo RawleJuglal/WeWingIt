@@ -1,12 +1,12 @@
-import { Configuration, OpenAIApi } from 'openai'
+// import { Configuration, OpenAIApi } from 'openai'
 
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, push, get, remove } from 'firebase/database'
 import './style.css'
 
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-})
+// const configuration = new Configuration({
+//     apiKey: process.env.OPENAI_API_KEY,
+// })
 
 
 const appSettings = {
@@ -16,7 +16,7 @@ const app = initializeApp(appSettings)
 const database = getDatabase(app)
 const conversationInDB = ref(database)
 
-const openai = new OpenAIApi(configuration)
+// const openai = new OpenAIApi(configuration)
 
 const chatbotConversation = document.getElementById('chatbot-conversation')
  
@@ -43,17 +43,28 @@ document.addEventListener('submit', (e) => {
 })
 
 async function fetchReply(){
-    const response = await openai.createCompletion({
-        model:'davinci:ft-bird-branch-2023-06-02-19-16-05',
-        prompt: conversationStr,
-        presence_penalty:0,
-        frequency_penalty:0.3,
-        temperature:0,
-        max_tokens: 100,
-        stop:['\n', '->']
+    const url = 'https://serene-queijadas-27b8a2.netlify.app/.netlify/functions/fetchAI'
+    
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'content-type': 'text/plain',
+        },
+        body: conversationStr
     })
-    conversationStr += ` ${response.data.choices[0].text} \n`
-    renderTypewriterText(response.data.choices[0].text)
+    const data = await response.json()
+    
+    // const response = await openai.createCompletion({
+    //     model:'davinci:ft-bird-branch-2023-06-02-19-16-05',
+    //     prompt: conversationStr,
+    //     presence_penalty:0,
+    //     frequency_penalty:0.3,
+    //     temperature:0,
+    //     max_tokens: 100,
+    //     stop:['\n', '->']
+    // })
+    conversationStr += ` ${data.choices[0].text} \n`
+    renderTypewriterText(data.choices[0].text)
     console.log(response)
     // get(conversationInDB).then(async snapshot => {
     //     if(snapshot.exists()){
