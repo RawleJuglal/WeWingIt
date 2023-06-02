@@ -63,9 +63,9 @@ async function fetchReply(){
     //     max_tokens: 100,
     //     stop:['\n', '->']
     // })
-    conversationStr += ` ${data.choices[0].text} \n`
-    renderTypewriterText(data.choices[0].text)
-    console.log(response)
+    conversationStr += ` ${data.reply.choices[0].text} \n`
+    renderTypewriterText(data.reply.choices[0].text)
+    console.log(data)
     // get(conversationInDB).then(async snapshot => {
     //     if(snapshot.exists()){
     //        const conversationArr = Object.values(snapshot.val())
